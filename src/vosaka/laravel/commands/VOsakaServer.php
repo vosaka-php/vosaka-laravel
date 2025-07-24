@@ -9,6 +9,7 @@ use Generator;
 use Throwable;
 use Illuminate\Console\Command;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 // use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use venndev\vosaka\VOsaka;
@@ -255,11 +256,10 @@ class VOsakaServer extends Command
     /**
      * Format Laravel response as HTTP response string
      */
-    private function formatHttpResponse($laravelResponse): string
+    private function formatHttpResponse(Response $laravelResponse): string
     {
         $status = $laravelResponse->getStatusCode();
-        $statusText = $laravelResponse->getReasonPhrase() ?: 'OK';
-
+        $statusText = $status < 200 ? 'OK' : ($status < 300 ? 'OK' : ($status < 400 ? 'Redirect' : ($status < 500 ? 'Client Error' : 'Server Error')));
         $response = "HTTP/1.1 {$status} {$statusText}\r\n";
 
         // Add headers
