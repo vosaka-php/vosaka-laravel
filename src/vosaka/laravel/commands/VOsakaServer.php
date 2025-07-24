@@ -32,7 +32,7 @@ class VOsakaServer extends Command
     public function handle(): int
     {
         $host = $this->option('host');
-        $port = $this->option('port');
+        $port = (int)$this->option('port');
 
         $this->info("Starting VOsaka Laravel server on http://{$host}:{$port}");
 
