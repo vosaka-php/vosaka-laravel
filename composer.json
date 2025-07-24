@@ -1,0 +1,31 @@
+{
+    "name": "venndev/laravel",
+    "autoload": {
+        "psr-4": {
+            "vosaka\\laravel\\": "src/vosaka/laravel/"
+        }
+    },
+    "authors": [
+        {
+            "name": "VennV",
+            "email": "hyplex9009@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/installer": "^5.16",
+        "laravel/framework": "^12.21",
+        "venndev/vosaka-http": "^1.1",
+        "nyholm/psr7": "^1.8",
+        "symfony/psr-http-message-bridge": "^7.3"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^7.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "vosaka\\laravel\\VOsakaServiceProvider"
+            ]
+        }
+    }
+}
