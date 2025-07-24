@@ -36,10 +36,6 @@ class VOsakaServer extends Command
 
         $this->info("Starting VOsaka Laravel server on http://{$host}:{$port}");
 
-        // Register signal handlers for graceful shutdown
-        pcntl_signal(SIGINT, [$this, 'handleShutdown']);
-        pcntl_signal(SIGTERM, [$this, 'handleShutdown']);
-
         // Start the async server
         VOsaka::spawn($this->startServer($host, $port ?? 8080));
         VOsaka::run();
@@ -322,20 +318,6 @@ class VOsakaServer extends Command
             "Connection: close\r\n" .
             "\r\n" .
             $body;
-    }
-
-    /**
-     * Handle shutdown signal
-     */
-    public function handleShutdown(): void
-    {
-        $this->info("\nShutting down server...");
-        $this->running = false;
-
-        // Close the listener to stop accepting new connections
-        if (isset($this->listener) && !$this->listener->isClosed()) {
-            $this->listener->close();
-        }
     }
 
     /**
